@@ -9,6 +9,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import AirQuality from "./pages/AirQuality";
+import FloodPrediction from "./pages/FloodPrediction";
 import HealthInsights from "./pages/HealthInsights";
 import Notifications from "./pages/Notifications";
 import Settings from "./pages/Settings";
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/air-quality" element={<AirQuality />} />
+            <Route path="/flood" element={<FloodPrediction />} />
             <Route path="/health-insights" element={<HealthInsights />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/settings" element={<Settings />} />
