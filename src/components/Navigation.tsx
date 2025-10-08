@@ -1,9 +1,17 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Wind, Home, Activity, Droplets, Sprout, Bell, Settings, LayoutDashboard } from "lucide-react";
+import { Wind, Home, Activity, Droplets, Sprout, Bell, Settings, LayoutDashboard, LogOut, LogIn } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 export const Navigation = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, isAdmin, signOut } = useAuth();
+  
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/");
+  };
   
   const isActive = (path: string) => location.pathname === path;
   
@@ -48,12 +56,35 @@ export const Navigation = () => {
           })}
         </div>
 
-        <Button asChild variant="outline" size="sm" className="hidden md:flex">
-          <Link to="/admin">
-            <LayoutDashboard className="mr-2 h-4 w-4" />
-            Admin
-          </Link>
-        </Button>
+        <div className="hidden md:flex items-center space-x-2">
+          {user ? (
+            <>
+              {isAdmin && (
+                <Button asChild variant="outline" size="sm">
+                  <Link to="/admin">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Admin
+                  </Link>
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleSignOut}
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Sign Out
+              </Button>
+            </>
+          ) : (
+            <Button asChild variant="default" size="sm">
+              <Link to="/auth">
+                <LogIn className="mr-2 h-4 w-4" />
+                Sign In
+              </Link>
+            </Button>
+          )}
+        </div>
       </div>
     </nav>
   );
